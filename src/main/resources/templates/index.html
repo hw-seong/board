@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Application</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 상단 헤더 -->
+    <div class="top-header">
+        <div class="container">
+            <div class="logo-section">
+                <a href="/" class="youtube-logo">
+                    <i class="fab fa-youtube"></i>
+                    <span>Demo Board</span>
+                </a>
+                <h1 class="site-title">홈</h1>
+            </div>
+            <div class="nav-section">
+                <!-- 로그인하지 않은 경우 -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/auth/login" class="nav-link">
+                        <i class="fas fa-sign-in-alt me-1"></i>로그인
+                    </a>
+                    <a href="/auth/register" class="nav-link">
+                        <i class="fas fa-user-plus me-1"></i>회원가입
+                    </a>
+                </div>
+                <!-- 로그인한 경우 -->
+                <div sec:authorize="isAuthenticated()">
+                    <span class="nav-link">
+                        <i class="fas fa-user me-1"></i>
+                        <span sec:authentication="principal.displayName">사용자</span>
+                    </span>
+                    <a href="/posts" class="nav-link">
+                        <i class="fas fa-list me-1"></i>게시판
+                    </a>
+                    <form th:action="@{/auth/logout}" method="post" style="display: inline;">
+                        <button type="submit" class="nav-link btn btn-link p-0">
+                            <i class="fas fa-sign-out-alt me-1"></i>로그아웃
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Demo Application</h1>
+            <p>Spring Boot + QueryDSL + Thymeleaf 기반 웹 애플리케이션</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>애플리케이션 기능</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>📝 게시글 관리</h3>
+                        <p>게시글을 작성, 조회, 수정, 삭제할 수 있습니다.</p>
+                        <a href="/posts" class="btn">게시글 목록 보기</a>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🔍 고급 검색</h3>
+                        <p>QueryDSL을 활용한 동적 검색 기능을 제공합니다.</p>
+                        <a href="/posts" class="btn btn-secondary">검색 기능 체험</a>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>📊 데이터 관리</h3>
+                        <p>Spring Data JPA와 QueryDSL을 통한 효율적인 데이터 처리</p>
+                        <a href="/posts/new" class="btn btn-success">새 게시글 작성</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>기술 스택</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Backend</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>• Spring Boot</li>
+                            <li>• Spring Data JPA</li>
+                            <li>• Spring Security</li>
+                            <li>• QueryDSL</li>
+                            <li>• H2 Database</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Frontend</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>• Thymeleaf</li>
+                            <li>• HTML5 & CSS3</li>
+                            <li>• JavaScript</li>
+                            <li>• Bootstrap</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Build Tool</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>• Gradle</li>
+                            <li>• Spring Boot Gradle Plugin</li>
+                            <li>• QueryDSL Gradle Plugin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>빠른 시작</h2>
+                <p style="margin-bottom: 1rem;">애플리케이션을 시작하려면 아래 버튼을 클릭하세요:</p>
+                <a href="/posts" class="btn">게시글 목록으로 이동</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2024 Demo Application. Spring Boot와 QueryDSL을 활용한 웹 애플리케이션입니다.</p>
+        </div>
+    </div>
+</body>
+</html> 

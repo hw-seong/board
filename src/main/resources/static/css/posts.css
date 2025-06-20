@@ -1,0 +1,444 @@
+/* 공통 스타일 */
+.post-title {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.post-title:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+/* 상단 헤더 영역 */
+.top-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.youtube-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.youtube-logo:hover {
+    color: #cc0000;
+    text-decoration: none;
+}
+
+.youtube-logo i {
+    font-size: 1.5rem;
+}
+
+.site-title {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.nav-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-section a {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-section a:hover {
+    color: #ff0000;
+}
+
+/* 메인 콘텐츠 영역 조정 */
+.main-content {
+    padding-top: 20px;
+}
+
+.search-box {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.recent-post {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 0;
+}
+
+.recent-post:last-child {
+    border-bottom: none;
+}
+
+.stats-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.stats-card h6 {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #667eea;
+}
+
+.stats-card .row {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0;
+    border: 1px solid #e9ecef;
+}
+
+.pagination .page-link {
+    color: #3498db;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    color: #3498db;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Form 스타일 */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.form-body {
+    padding: 40px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* 글쓰기 페이지 버튼 스타일 통일 */
+.form-body .btn {
+    padding: 12px 25px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-body .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-body .btn-primary {
+    background-color: #667eea;
+    color: white;
+}
+
+.form-body .btn-primary:hover {
+    background-color: #5a67d8;
+}
+
+.form-body .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.form-body .btn-secondary:hover {
+    background: #5a6268;
+}
+
+.form-body .btn-outline-info {
+    background: transparent;
+    color: #17a2b8;
+    border: 2px solid #17a2b8;
+}
+
+.form-body .btn-outline-info:hover {
+    background: #17a2b8;
+    color: white;
+}
+
+.form-body .btn-outline-secondary {
+    background: transparent;
+    color: #6c757d;
+    border: 2px solid #6c757d;
+}
+
+.form-body .btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.character-count {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.character-count.warning {
+    color: #ffc107;
+}
+
+.character-count.danger {
+    color: #dc3545;
+}
+
+.preview-area {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    display: none;
+}
+
+.preview-area.show {
+    display: block;
+}
+
+.toolbar {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+}
+
+.toolbar button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+/* Detail 스타일 */
+.post-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.post-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+}
+
+.post-detail-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.post-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-body {
+    padding: 40px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.post-content {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 40px;
+    border-left: 5px solid #667eea;
+}
+
+.action-buttons {
+    margin: 10px 0;
+    padding: 5px 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-danger {
+    background: #dc3545;
+    border: none;
+    padding: 12px 25px;
+    font-weight: 600;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.share-buttons h6 {
+    width: 100%;
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.share-btn {
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.share-btn.facebook { 
+    background: #1877f2; 
+}
+
+.share-btn.twitter { 
+    background: #1da1f2; 
+}
+
+.share-btn.kakao { 
+    background: #fee500; 
+    color: #000; 
+}
+
+.share-btn.copy { 
+    background: #6c757d; 
+}
+
+.toastui-editor-contents .placeholder {
+    background-color: transparent !important;
+} 

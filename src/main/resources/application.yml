@@ -1,0 +1,246 @@
+spring:
+  application:
+    name: demo-board
+  
+  # 데이터베이스 설정
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  # H2 콘솔 설정
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+        trace: false
+  
+  # JPA 설정
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
+  
+  # JPA Auditing 설정
+  data:
+    jpa:
+      repositories:
+        enabled: true
+      auditing:
+        enabled: true
+  
+  # Thymeleaf 설정
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html
+  
+  # 정적 리소스 설정
+  web:
+    resources:
+      static-locations: classpath:/static/
+      cache:
+        period: 0
+  
+  # 서버 설정
+  server:
+    port: 8080
+    servlet:
+      context-path: /
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+  
+  # 로깅 설정
+  logging:
+    level:
+      root: INFO
+      com.example.demo: DEBUG
+      org.springframework.web: DEBUG
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+      file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file:
+      name: logs/application.log
+      max-size: 10MB
+      max-history: 30
+
+# 개발 환경 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  # 개발 환경 데이터베이스 설정
+  datasource:
+    url: jdbc:h2:mem:devdb
+    username: sa
+    password: 
+  
+  # 개발 환경 JPA 설정
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # 개발 환경 로깅
+  logging:
+    level:
+      com.example.demo: DEBUG
+      org.springframework.web: DEBUG
+      org.hibernate.SQL: DEBUG
+
+# 테스트 환경 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  
+  # 테스트 환경 데이터베이스 설정
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+  
+  # 테스트 환경 JPA 설정
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+  
+  # 테스트 환경 로깅
+  logging:
+    level:
+      root: WARN
+      com.example.demo: INFO
+
+# 운영 환경 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  
+  # 운영 환경 데이터베이스 설정 (실제 DB로 변경 필요)
+  datasource:
+    url: jdbc:h2:file:./data/proddb
+    username: sa
+    password: ${DB_PASSWORD:}
+  
+  # 운영 환경 JPA 설정
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+  
+  # 운영 환경 로깅
+  logging:
+    level:
+      root: WARN
+      com.example.demo: INFO
+    file:
+      name: logs/application.log
+      max-size: 100MB
+      max-history: 90
+
+# 애플리케이션 커스텀 설정
+app:
+  # 게시판 설정
+  board:
+    # 페이지당 게시글 수
+    page-size: 10
+    # 최근 게시글 표시 개수
+    recent-posts-count: 5
+    # 제목 최대 길이
+    title-max-length: 200
+    # 내용 최대 길이
+    content-max-length: 10000
+    # 작성자 최대 길이
+    author-max-length: 50
+  
+  # 파일 업로드 설정
+  upload:
+    # 업로드 경로
+    path: ./uploads
+    # 최대 파일 크기 (MB)
+    max-file-size: 10
+    # 허용된 파일 확장자
+    allowed-extensions: jpg,jpeg,png,gif,pdf,doc,docx,txt
+  
+  # 보안 설정
+  security:
+    # 세션 타임아웃 (분)
+    session-timeout: 30
+    # CSRF 보호 활성화
+    csrf-enabled: true
+  
+  # 캐시 설정
+  cache:
+    # 게시글 목록 캐시 시간 (초)
+    post-list-ttl: 300
+    # 게시글 상세 캐시 시간 (초)
+    post-detail-ttl: 600
+
+# 관리자 설정
+admin:
+  # 관리자 계정
+  username: admin
+  password: ${ADMIN_PASSWORD:admin123}
+  email: admin@example.com
+
+# 메일 설정 (필요시 활성화)
+#spring:
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: ${MAIL_USERNAME:}
+#    password: ${MAIL_PASSWORD:}
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+
+# Redis 설정 (필요시 활성화)
+#spring:
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password: ${REDIS_PASSWORD:}
+#    timeout: 2000ms
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#        max-wait: -1ms 

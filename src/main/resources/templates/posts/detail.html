@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${post.title}">게시글 제목</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/posts.css">
+</head>
+<body class="bg-light">
+    <!-- 상단 헤더 -->
+    <div class="top-header">
+        <div class="container">
+            <div class="logo-section">
+                <a href="/" class="youtube-logo">
+                    <i class="fab fa-youtube"></i>
+                    <span>Demo Board</span>
+                </a>
+                <h1 class="site-title">게시글</h1>
+            </div>
+            <div class="nav-section">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home me-1"></i>홈
+                </a>
+                <a href="/posts" class="nav-link">
+                    <i class="fas fa-list me-1"></i>게시판
+                </a>
+                <a href="/posts/new" class="nav-link">
+                    <i class="fas fa-plus me-1"></i>글쓰기
+                </a>
+                <!-- 로그인한 경우 -->
+                <div sec:authorize="isAuthenticated()">
+                    <span class="nav-link">
+                        <i class="fas fa-user me-1"></i>
+                        <span sec:authentication="principal.displayName">사용자</span>
+                    </span>
+                    <form th:action="@{/auth/logout}" method="post" style="display: inline;">
+                        <button type="submit" class="nav-link btn btn-link p-0">
+                            <i class="fas fa-sign-out-alt me-1"></i>로그아웃
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 main-content">
+        <div class="post-container">
+            <!-- 게시글 헤더 -->
+            <div class="post-header">
+                <h1 class="post-detail-title" th:text="${post.title}">게시글 제목</h1>
+                <div class="post-meta">
+                    <div class="post-meta-item">
+                        <i class="fas fa-user"></i>
+                        <span th:text="${post.author}">작성자</span>
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span th:text="${post.formattedCreatedAt}">작성일</span>
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="fas fa-eye"></i>
+                        <span th:text="${post.viewCount}">조회수</span>
+                    </div>
+                    <div class="post-meta-item" th:if="${post.updatedAt != null and post.updatedAt != post.createdAt}">
+                        <i class="fas fa-edit"></i>
+                        <span th:text="'수정됨: ' + ${post.formattedUpdatedAt}">수정일</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 게시글 본문 -->
+            <div class="post-body">
+                <!-- Flash 메시지 -->
+                <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span th:text="${message}">메시지</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span th:text="${error}">에러</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <!-- 게시글 내용 -->
+                <div class="post-content" th:utext="${#strings.replace(#strings.replace(post.content, '\n', '<br>'), ' ', '&nbsp;')}">
+                    게시글 내용이 여기에 표시됩니다.
+                </div>
+
+                <!-- 공유 버튼 -->
+                <div class="share-buttons">
+                    <h6 class="mb-3">
+                        <i class="fas fa-share-alt me-2"></i>공유하기
+                    </h6>
+                    <a href="#" class="share-btn facebook" onclick="shareToFacebook()">
+                        <i class="fab fa-facebook-f me-1"></i>Facebook
+                    </a>
+                    <a href="#" class="share-btn twitter" onclick="shareToTwitter()">
+                        <i class="fab fa-twitter me-1"></i>Twitter
+                    </a>
+                    <a href="#" class="share-btn kakao" onclick="shareToKakao()">
+                        <i class="fas fa-comment me-1"></i>KakaoTalk
+                    </a>
+                    <button class="share-btn copy" onclick="copyToClipboard()">
+                        <i class="fas fa-copy me-1"></i>복사
+                    </button>
+                </div>
+
+                <!-- 버튼 영역 -->
+                <div class="action-buttons">
+                    <div class="left-buttons">
+                        <a href="/posts" class="btn btn-secondary">
+                            <i class="fas fa-list me-1"></i>목록으로
+                        </a>
+                    </div>
+                    <div class="right-buttons" th:if="${post.author == #authentication.name}">
+                        <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">
+                            <i class="fas fa-edit me-1"></i>수정
+                        </a>
+                        <button type="button" class="btn btn-danger" onclick="deletePost()">
+                            <i class="fas fa-trash me-1"></i>삭제
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 게시글 정보 -->
+                <div class="stats-card">
+                    <h6>
+                        <i class="fas fa-info-circle me-2"></i>게시글 정보
+                    </h6>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div class="small text-muted mb-2">게시글 번호</div>
+                            <div class="fw-bold fs-5" th:text="${post.id}">1</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small text-muted mb-2">작성일시</div>
+                            <div class="fw-bold fs-5" th:text="${post.formattedCreatedAt}">2024-01-01 12:00</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small text-muted mb-2">조회수</div>
+                            <div class="fw-bold fs-5" th:text="${post.viewCount}">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 게시글 삭제
+        function deletePost() {
+            if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+                const postId = /*[[${post.id}]]*/ 1;
+                fetch(`/posts/api/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = '/posts';
+                    } else {
+                        alert('삭제 실패: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('삭제 중 오류가 발생했습니다.');
+                });
+            }
+        }
+
+        // Facebook 공유
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(/*[[${post.title}]]*/ '제목');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        // Twitter 공유
+        function shareToTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(/*[[${post.title}]]*/ '제목');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
+        }
+
+        // KakaoTalk 공유
+        function shareToKakao() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(/*[[${post.title}]]*/ '제목');
+            window.open(`https://story.kakao.com/share?url=${url}`, '_blank');
+        }
+
+        // 클립보드 복사
+        function copyToClipboard() {
+            const url = window.location.href;
+            const title = /*[[${post.title}]]*/ '제목';
+            const text = `${title}\n${url}`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('링크가 클립보드에 복사되었습니다.');
+                }).catch(err => {
+                    console.error('클립보드 복사 실패:', err);
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // 클립보드 복사 폴백
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('링크가 클립보드에 복사되었습니다.');
+            } catch (err) {
+                console.error('클립보드 복사 실패:', err);
+                alert('클립보드 복사에 실패했습니다.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 자동으로 알림 메시지 숨기기
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+</body>
+</html> 
