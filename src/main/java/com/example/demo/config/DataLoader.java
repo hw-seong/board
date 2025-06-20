@@ -56,6 +56,14 @@ public class DataLoader implements CommandLineRunner {
         user3.setDisplayName("김철수");
         userRepository.save(user3);
 
+        // 요청된 회원가입 정보 추가
+        User seonghw = new User();
+        seonghw.setUsername("seonghw");
+        seonghw.setPassword(passwordEncoder.encode("1q2w3e4r5t"));
+        seonghw.setEmail("seonghw@mobilefactory.co.kr");
+        seonghw.setDisplayName("성현우");
+        userRepository.save(seonghw);
+
         log.info("테스트 사용자 생성 완료");
     }
     private void createTestPosts() {
